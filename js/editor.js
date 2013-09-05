@@ -2,16 +2,17 @@ var editor = (function() {
 
 	// Editor elements
 	var headerField, contentField, cleanSlate, lastType, currentNodeList, savedSelection;
+
+	// DOM elements
 	var allElements = [];
- 		//allElements.push('.header2');
- 		//allElements.push('.header3');
  	var allElementsField = [];
+	
 	// Editor Bubble elements
 	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
 
 
 	function init(a) {
-		allElements = a; console.log(allElements);
+		allElements = a; 
 		lastRange = 0;
 		bindElements();
 
@@ -136,7 +137,7 @@ var editor = (function() {
 			currentNodeList = findNodes( selection.focusNode );
 
 			// Find if highlighting is in the editable area
-			if ( hasNode( currentNodeList, "ARTICLE") ) {
+			if ( hasNode( currentNodeList, "DIV") ) {
 				updateBubbleStates();
 				updateBubblePosition();
 

@@ -7,12 +7,16 @@ var extra = (function() {
 	}
 
 	function findElementsEditable() {
-		
+
 		$('div[contenteditable=true]').each(function() {
 			allElements.push('.' + $(this).attr('class'));
 		});
 
 		return allElements;
+	}
+
+	function localstorageToJson() {
+		return JSON.stringify(localStorage);
 	}
 
 	return {
