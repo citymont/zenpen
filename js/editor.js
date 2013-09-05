@@ -2,13 +2,16 @@ var editor = (function() {
 
 	// Editor elements
 	var headerField, contentField, cleanSlate, lastType, currentNodeList, savedSelection;
-
+	var allElements = [];
+ 		//allElements.push('.header2');
+ 		//allElements.push('.header3');
+ 	var allElementsField = [];
 	// Editor Bubble elements
 	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
 
 
-	function init() {
-
+	function init(a) {
+		allElements = a; console.log(allElements);
 		lastRange = 0;
 		bindElements();
 
@@ -26,6 +29,8 @@ var editor = (function() {
 			loadState();
 		}
 	}
+
+
 
 	function createEventBindings( on ) {
 
@@ -80,6 +85,12 @@ var editor = (function() {
 		headerField = document.querySelector( '.header' );
 		contentField = document.querySelector( '.content' );
 		textOptions = document.querySelector( '.text-options' );
+
+		// creer des fileds automatiques
+		
+		for (var i = allElements.length - 1; i >= 0; i--) {
+			allElementsField[i] = document.querySelector( allElements[i] );
+		};
 
 		optionsBox = textOptions.querySelector( '.options' );
 
@@ -217,6 +228,11 @@ var editor = (function() {
 		
 		localStorage[ 'header' ] = headerField.innerHTML;
 		localStorage[ 'content' ] = contentField.innerHTML;
+
+		// dynamic
+		for (var i = allElements.length - 1; i >= 0; i--) {
+			localStorage[allElements[i]] = allElementsField[i].innerHTML;
+		};
 	}
 
 	function loadState() {
@@ -228,6 +244,14 @@ var editor = (function() {
 		if ( localStorage[ 'content' ] ) {
 			contentField.innerHTML = localStorage[ 'content' ];
 		}
+
+		// dynamic
+		for (var i = allElements.length - 1; i >= 0; i--) {
+			if(localStorage[allElements[i]]) {
+			 allElementsField[i].innerHTML = localStorage[allElements[i]];	
+			}
+			
+		};
 	}
 
 	function onBoldClick() {

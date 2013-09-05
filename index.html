@@ -18,7 +18,7 @@
 		<script src="js/libs/FileSaver.min.js"></script>
 		<script src="js/libs/Blob.js"></script>
 		<script src="js/libs/fullScreen.js"></script>
-		
+		<script src="http://codeorigin.jquery.com/jquery-1.10.2.min.js"></script>
 		<!-- JS loading in footer -->
 
     </head>
@@ -104,6 +104,14 @@
 				This is ZenPen
 			</header>
 
+			<div contenteditable="true" class="header2">
+				This is ZenPen
+			</div>
+
+			<div contenteditable="true" class="header3">
+				This is ZenPen
+			</div>
+
 			<article contenteditable="true" class="content">
 
 				<p>
@@ -136,13 +144,16 @@
 		<script type="text/javascript">
 			// Load required scripts.	
 			head.js( 
+				"http://codeorigin.jquery.com/jquery-1.10.2.min.js",
+				"js/extra.js",
 				"js/utils.js",
 				"js/ui.js",
 				"js/editor.js",
 	        	function(){
 	            	
 	            	// Initiate ZenPen
-	            	editor.init();
+
+	            	editor.init(extra.init());
 	    			ui.init();
 	            }
 	        );
