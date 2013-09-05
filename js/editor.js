@@ -137,13 +137,13 @@ var editor = (function() {
 			currentNodeList = findNodes( selection.focusNode );
 
 			// Find if highlighting is in the editable area
-			if ( hasNode( currentNodeList, "DIV") ) {
+			//if ( hasNode( currentNodeList, "DIV") ) {
 				updateBubbleStates();
 				updateBubblePosition();
 
 				// Show the ui bubble
 				textOptions.className = "text-options active";
-			}
+			//}
 		}
 
 		lastType = selection.isCollapsed;
