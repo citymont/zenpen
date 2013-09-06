@@ -12,7 +12,8 @@ var editor = (function() {
 
 
 	function init(a) {
-		allElements = a; 
+		allElements = a.allElements; 
+		console.log(a.y);
 		lastRange = 0;
 		bindElements();
 
