@@ -5,15 +5,15 @@ var editor = (function() {
 
 	// DOM elements
 	var allElements = [];
- 	var allElementsField = [];
+	var allElementsField = [];
 	
 	// Editor Bubble elements
 	var textOptions, optionsBox, boldButton, italicButton, quoteButton, urlButton, urlInput;
 
 
 	function init(a) {
-		allElements = a.allElements; 
-		console.log(a.y);
+		allElements = a.allElements;
+		allElementsField = a.allElementsField;
 		lastRange = 0;
 		bindElements();
 
@@ -29,7 +29,9 @@ var editor = (function() {
 		// Load state if storage is supported
 		if ( supportsHtmlStorage() ) {
 			loadState();
-		}
+		} //else {
+			//loadState('1383055390.json'); // load json file
+		//}
 	}
 
 
@@ -87,12 +89,6 @@ var editor = (function() {
 		headerField = document.querySelector( '.header' );
 		contentField = document.querySelector( '.content' );
 		textOptions = document.querySelector( '.text-options' );
-
-		// creer des fileds automatiques
-		
-		for (var i = allElements.length - 1; i >= 0; i--) {
-			allElementsField[i] = document.querySelector( allElements[i] );
-		};
 
 		optionsBox = textOptions.querySelector( '.options' );
 
@@ -226,14 +222,18 @@ var editor = (function() {
 		return !!nodeList[ name ];
 	}
 
+	function preState( v ){
+		return v.slice(1);
+	}
+
 	function saveState( event ) {
 		
-		localStorage[ 'header' ] = headerField.innerHTML;
-		localStorage[ 'content' ] = contentField.innerHTML;
+		localStorage[ 'header' ] = headerField.innerHTML.trim();
+		localStorage[ 'content' ] = contentField.innerHTML.trim();
 
 		// dynamic
 		for (var i = allElements.length - 1; i >= 0; i--) {
-			localStorage[allElements[i]] = allElementsField[i].innerHTML;
+			localStorage[preState(allElements[i])] = allElementsField[i].innerHTML.trim();
 		};
 	}
 
@@ -249,19 +249,23 @@ var editor = (function() {
 
 		// dynamic
 		for (var i = allElements.length - 1; i >= 0; i--) {
-			if(localStorage[allElements[i]]) {
-			 allElementsField[i].innerHTML = localStorage[allElements[i]];	
+			if(localStorage[preState(allElements[i])]) {
+			 allElementsField[i].innerHTML = localStorage[preState(allElements[i])];	
 			}
 			
 		};
+		
+		
 	}
 
 	function onBoldClick() {
 		document.execCommand( 'bold', false );
+		saveState();
 	}
 
 	function onItalicClick() {
 		document.execCommand( 'italic', false );
+		saveState();
 	}
 
 	function onQuoteClick() {
@@ -274,6 +278,7 @@ var editor = (function() {
 		} else {
 			document.execCommand( 'formatBlock', false, 'blockquote' );
 		}
+		saveState();
 	}
 
 	function onUrlClick() {
@@ -307,6 +312,7 @@ var editor = (function() {
 
 			optionsBox.className = 'options';
 		}
+		saveState();
 	}
 
 	function onUrlInputKeyDown( event ) {
